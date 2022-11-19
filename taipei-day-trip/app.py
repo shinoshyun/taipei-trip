@@ -57,8 +57,8 @@ def attractions():
 	records = cursor.fetchall()	
 	
 	# 搜尋比對出的資料庫比數
-	checkCount="SELECT COUNT(*) FROM attractions WHERE category=%s OR name LIKE %s ORDER BY id LIMIT 12 OFFSET %s"
-	checkCount_value = (keyword, "%" + keyword + "%", page*12)
+	checkCount="SELECT COUNT(*) FROM attractions WHERE category=%s OR name LIKE %s ORDER BY id LIMIT 12"
+	checkCount_value = (keyword, "%" + keyword + "%")
 	cursor.execute(checkCount, checkCount_value)
 	realSum = 0
 	sum = cursor.fetchall()
@@ -162,5 +162,5 @@ def categories():
 	return jsonify(data), 500
 
 
-
+# app.run(port=3000)
 app.run(host="0.0.0.0", port=3000)
