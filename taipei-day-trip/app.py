@@ -1,12 +1,16 @@
-from flask import Flask, request, render_template, redirect, session, jsonify, make_response
+from flask import Flask, request, render_template, redirect, session, jsonify
 import re, json
-
 
 app=Flask(__name__, static_folder="static",
             static_url_path="/")
+
+
 app.config["JSON_AS_ASCII"]=False
 app.config["TEMPLATES_AUTO_RELOAD"]=True
 app.config["JSON_SORT_KEYS"] = False
+
+
+
 
 import mysql.connector
 mysql_connection = mysql.connector.connect(
@@ -39,12 +43,12 @@ def thankyou():
 
 
 
-
-
-
 @app.route("/api/attractions", methods=["GET"])
 def attractions():
+
 	
+    
+
 	page = request.args.get("page", 0)
 	page = int(page)
 	keyword = request.args.get("keyword", "")
@@ -57,7 +61,7 @@ def attractions():
 	records = cursor.fetchall()	
 	
 	# 搜尋比對出的資料庫比數
-	checkCount="SELECT COUNT(*) FROM attractions WHERE category=%s OR name LIKE %s ORDER BY id LIMIT 12"
+	checkCount="SELECT COUNT(*) FROM attractions WHERE category=%s OR name LIKE %s ORDER BY id"
 	checkCount_value = (keyword, "%" + keyword + "%")
 	cursor.execute(checkCount, checkCount_value)
 	realSum = 0
