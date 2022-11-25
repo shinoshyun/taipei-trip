@@ -113,7 +113,7 @@ function getDatadata(page, keyword) {
         }
 
         if (attractions_data.nextPage != null) {
-            observe(attractions_data.nextPage, "");
+            observe(attractions_data.nextPage, keyword);
         }
     })
 }
