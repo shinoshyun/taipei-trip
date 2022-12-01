@@ -330,10 +330,24 @@ hr {
     .pay {
         padding: 15px 20px 42px;
     }
+
 }
 
 @media (max-width: 768px) {
+    .main {
+        margin-top: 54px;
+    }
+
     .infoBox {
         grid-template-columns: 1fr;
+        padding: 0px;
+    }
+
+    .info {
+        padding: 0px 20px;
+    }
+
+    .slideshow-container {
+        border-radius: 0px;
     }
 }
