@@ -46,13 +46,9 @@ searchBar.addEventListener('mousedown', (event) => {
 
 
 //把searchBar關閉
-// function close_searchBar() {
 searchBar.addEventListener('blur', (event) => {
     document.querySelector(".dropdown-content").classList.remove("show");
 });
-// }
-
-
 
 
 // -------------------------------找到資料庫所有的資料---------------------------------
@@ -66,6 +62,9 @@ function getDatadata(page, keyword) {
         let dataCount = Object.keys(data).length;
 
         for (let i = 0; i < dataCount; i++) {
+            let data_id = data[i].id;
+            let a = document.createElement("a");
+
 
             let data_name = data[i].name;
 
@@ -100,16 +99,19 @@ function getDatadata(page, keyword) {
             category_item.appendChild(p_category);
 
 
-            let item = document.createElement("div");
+            let item = document.createElement("a");
             item.className = "item";
+            item.setAttribute("href", "/attraction/" + data_id);
             item.appendChild(imgSrc);
             item.appendChild(h3);
             item.appendChild(category_item);
-
+            item.appendChild(a);
 
             //找到HTML content的位置  //依序把上面裝好imgSrc和h3放入
             let images_element = document.querySelector(".content");
             images_element.appendChild(item);
+
+
         }
 
         if (attractions_data.nextPage != null) {
@@ -139,6 +141,8 @@ function observe(page, keyword) {
                     let dataCount = Object.keys(data).length;
 
                     for (let i = 0; i < dataCount; i++) {
+                        let data_id = data[i].id;
+                        let a = document.createElement("a");
 
                         let data_name = data[i].name;
 
@@ -174,11 +178,13 @@ function observe(page, keyword) {
                         category_item.appendChild(p_category);
 
 
-                        let item = document.createElement("div");
+                        let item = document.createElement("a");
                         item.className = "item";
+                        item.setAttribute("href", "/attraction/" + data_id);
                         item.appendChild(imgSrc);
                         item.appendChild(h3);
                         item.appendChild(category_item);
+                        item.appendChild(a);
 
                         //找到HTML content的位置  //依序把上面裝好imgSrc和h3放入
                         let images_element = document.querySelector(".content");
@@ -203,14 +209,10 @@ function observe(page, keyword) {
 searchBtn.addEventListener("click", function () {
     let content = document.querySelector(".search-bar").value;
     let content2 = document.querySelector(".content")
-    // console.log(dropdown)
     content2.innerHTML = "";
     getDatadata(0, content);
     //抓到值keyword //清空原有的內容 content.innerHTML="" //呼叫getDatadata(0, keyword)
 })
-
-
-
 
 // ------------------------searchBar-------------------------
 

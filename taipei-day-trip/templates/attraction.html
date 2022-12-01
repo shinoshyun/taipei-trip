@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/reset.css">
+    <link rel="stylesheet" href="/css/attraction.css">
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="navbar">
+        <div class="navwrap">
+            <div class="navtitle">
+                <h2>台北一日遊</h2>
+            </div>
+            <div class="menu">
+                <ul>
+                    <li><a href="#">預定行程</a></li>
+                    <li><a href="#">登入/註冊</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="main">
+        <div class="infoBox">
+
+            <div class="slideshow-container">
+                <!-- <div class="slider">
+                <img src="https://www.travel.taipei/d_upload_ttn/sceneadmin/pic/11000848.jpg">
+                </div> -->
+                <div class="controls">
+                    <img class="prev" onclick="plusSlides(-1)" src="/icon/btn_leftArrow.png">
+                    <img class="next" onclick="plusSlides(1)" src="/icon/btn_rightArrow.png">
+                </div>
+                <ul class="dots">
+                    <!-- <li class="dot"></li> -->
+                </ul>
+            </div>
+
+
+            <div class="info">
+                <div class="title">
+                    <h3 id="title"></h3>
+                    <div class="categoryMRT">
+                        <p id="category"></p>
+                        <p>&thinsp;at&thinsp;</p>
+                        <p id="mrt"></p>
+                    </div>
+                </div>
+                <div class="pay">
+                    <h5>訂購導覽行程</h5>
+                    <p>以此景點為中心的一日行程，帶您探索城市角落故事</p>
+                    <h5>選擇日期：<input type="date" class="date"></h5>
+                    <div class="radio-group">
+                        <h5>選擇時間：</h5>
+                        <label class="radioTime">
+                            <input type="radio" id="morning" name="time">上半天<span></span>
+                        </label>
+                        <label class="radioTime">
+                            <input type="radio" id="afternoon" name="time">下半天<span></span>
+                        </label>
+                    </div>
+                    <div class="money">
+                        <h5>導覽費用：</h5>
+                        <p id="result"></p>
+                    </div>
+                    <button class="button">開始預約行程</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr>
+    <div class="content">
+        <div class="introduction">
+            <p id="description"></p>
+            <h5>景點地址：</h5>
+            <p id="address"></p>
+            <h5>交通方式：</h5>
+            <p id="transport"></p>
+        </div>
+    </div>
+    <div class="footer">
+        <h3>COPYRIGHT © 2021 台北一日遊</h3>
+    </div>
+
+    <script src="/js/attraction.js"></script>
+</body>
+
+</html>

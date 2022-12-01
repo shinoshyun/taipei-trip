@@ -46,9 +46,6 @@ def thankyou():
 @app.route("/api/attractions", methods=["GET"])
 def attractions():
 
-	
-    
-
 	page = request.args.get("page", 0)
 	page = int(page)
 	keyword = request.args.get("keyword", "")
