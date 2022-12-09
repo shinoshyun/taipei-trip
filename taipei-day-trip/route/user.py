@@ -11,6 +11,7 @@ mysql_connection = mysql.connector.connect(
     password='password',
     database='attractions_data'
 )
+
 cursor = mysql_connection.cursor(buffered=True)
 
 
