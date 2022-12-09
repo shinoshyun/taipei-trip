@@ -1,5 +1,5 @@
-from flask import Flask, Blueprint, request, jsonify, make_response, request, redirect, session
-import jwt, json
+from flask import Flask, Blueprint, request, jsonify, make_response, request
+import jwt
 import datetime
 
 user = Blueprint('user', __name__)

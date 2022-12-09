@@ -1,4 +1,3 @@
-
 const pathArray = window.location.pathname.split('/');
 const attraction = pathArray[2];
 

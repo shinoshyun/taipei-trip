@@ -4,6 +4,10 @@ body {
   font-family: "Noto Sans TC";
 }
 
+.taipetTitle {
+  cursor: pointer;
+}
+
 .navbar {
   z-index: 200;
   position: fixed;

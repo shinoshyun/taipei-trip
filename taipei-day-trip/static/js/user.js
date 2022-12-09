@@ -1,3 +1,9 @@
+const taipetTitle = document.querySelector(".taipetTitle");
+taipetTitle.addEventListener("click", function () {
+    window.location = "/";
+})
+
+
 const id01 = document.getElementById('id01');
 const id02 = document.getElementById('id02');
 
@@ -131,3 +137,4 @@ logoutBtn.addEventListener("click", function () {
         }
     })
 })
+
