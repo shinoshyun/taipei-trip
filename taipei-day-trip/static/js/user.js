@@ -63,7 +63,6 @@ signupbtn.addEventListener("click", function () {
             response.json().then(function (data) {
                 document.getElementById("registerTextOK").textContent = "註冊成功，歡迎光臨";
                 document.getElementById("registerText").textContent = "";
-
             })
         }
     })
@@ -95,11 +94,11 @@ signinbtn.addEventListener("click", function () {
             ok.style.display = "none";
             notok.style.display = "block";
             return;
+        } else {
+            response.json().then(function () {
+                location.reload();
+            })
         }
-
-        response.json().then(function () {
-            location.reload();
-        })
     })
 })
 
