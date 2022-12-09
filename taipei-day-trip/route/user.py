@@ -9,7 +9,7 @@ mysql_connection = mysql.connector.connect(
     port='3306',
     user='root',
     password='password',
-    database='user_data'
+    database='attractions_data'
 )
 cursor = mysql_connection.cursor(buffered=True)
 
