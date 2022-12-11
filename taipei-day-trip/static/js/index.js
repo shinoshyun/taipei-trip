@@ -35,7 +35,7 @@ searchBar.addEventListener('mousedown', (event) => {
         let searchBar = document.getElementById("search-bar");
         let options = document.getElementsByClassName("options");
         //optinos裡有很多項目，設option獲得每一個項目，獲得的文字再放入searchBar裡
-        for (option of options) {
+        for (let option of options) {
             option.onmousedown = function (element) {
                 searchBar.value = element.target.textContent;
             }
@@ -294,4 +294,8 @@ searchBtn.addEventListener("click", function () {
 //             }
 //         });
 //     }, configs);
-// }
+
+
+
+
+

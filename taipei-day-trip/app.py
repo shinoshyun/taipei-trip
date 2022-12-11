@@ -1,9 +1,13 @@
-from flask import Flask, request, render_template, redirect, session, jsonify
+from flask import Flask, Blueprint, request, render_template, redirect, session, jsonify
 import re, json
+from route.user import user
+
+
 
 app=Flask(__name__, static_folder="static",
             static_url_path="/")
 
+app.register_blueprint(user, user_prefix='') 
 
 app.config["JSON_AS_ASCII"]=False
 app.config["TEMPLATES_AUTO_RELOAD"]=True
