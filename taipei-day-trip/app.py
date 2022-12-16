@@ -1,6 +1,7 @@
-from flask import Flask, Blueprint, request, render_template, redirect, session, jsonify
-import re, json
+from flask import Flask, request, render_template, redirect, session, jsonify
+import re
 from route.user import user
+from route.booking import booking
 
 
 
@@ -8,6 +9,7 @@ app=Flask(__name__, static_folder="static",
             static_url_path="/")
 
 app.register_blueprint(user, user_prefix='') 
+app.register_blueprint(booking, user_prefix='') 
 
 app.config["JSON_AS_ASCII"]=False
 app.config["TEMPLATES_AUTO_RELOAD"]=True
@@ -21,7 +23,7 @@ mysql_connection = mysql.connector.connect(
     host='localhost',
     port='3306',
     user='root',
-    password='password',
+    password='dumplings67',
     database='attractions_data'
 )
 cursor = mysql_connection.cursor(buffered=True)
@@ -167,5 +169,4 @@ def categories():
 	return jsonify(data), 500
 
 
-# app.run(port=3000)
 app.run(host="0.0.0.0", port=3000)

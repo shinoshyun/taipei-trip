@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/reset.css">
+    <link rel="stylesheet" href="/css/booking.css">
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="navbar">
+        <div class="navwrap">
+            <div class="title">
+                <h2 class="taipetTitle">台北一日遊</h2>
+            </div>
+            <div class="menu">
+                <div class="reserve_btn">預定行程</div>
+                <div class="signup_btn">登入/註冊</div>
+                <div class="logoutBtn">登出系統</div>
+            </div>
+        </div>
+    </div>
+    <div id="id01" class="modal">
+        <form class="signin-content">
+            <div class="signin">
+                <div class="colorbar"></div>
+                <div class="modal-container">
+                    <span class="close" title="Close Modal">&times;</span>
+                    <h2>登入會員帳號</h2>
+                    <div class="emailPsw">
+                        <input class="login_email" type="text" placeholder="輸入電子信箱" required />
+                        <input class="login_password" type="password" placeholder="輸入密碼" required />
+                    </div>
+                    <div class="signinbtn"><button type='button'>登入帳戶</button></div>
+                    <div class="clickHere">
+                        <!-- <h3 id="messageTextOK" class="ok"></h3> -->
+                        <h3 id="messageText" class="notok"></h3>
+                        <span>還沒有帳戶？</span>
+                        <span class="toSignup">點此註冊</span>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div id="id02" class="modal">
+        <form class="signup-content">
+            <div class="signup">
+                <div class="colorbar"></div>
+                <div class="modal-container">
+                    <span onclick="document.getElementById('id02').style.display='none'" class="close"
+                        title="Close Modal">&times;</span>
+                    <h2>登入會員帳號</h2>
+                    <div class="nameEmailPsw">
+                        <input class="signup_name" type="text" placeholder="輸入姓名" required />
+                        <input class="signup_email" type="text" placeholder="輸入電子郵件" required />
+                        <input class="signup_password" type="password" placeholder="輸入密碼" required />
+                    </div>
+                    <div class="signupbtn"><button type='button'>註冊新帳戶</button></div>
+                    <div class="clickHere">
+                        <h3 id="registerTextOK" class="ok"></h3>
+                        <h3 id="registerText" class="notok"></h3>
+                        <span>已經有帳戶了？</span>
+                        <span class="toSignin">點此登入</span>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="reply">
+        <div class="replyMsg">
+            <h3>您好，</h3>
+            <h3 id="memberName"></h3>
+            <h3>，待預訂的行程如下：</h3>
+        </div>
+    </div>
+    <div class="haventBooking">
+        <div class="haventContent">
+            <h3>目前沒有任何待預訂的行程</h3>
+        </div>
+        <div class="footerB">
+            <h3>COPYRIGHT © 2021 台北一日遊</h3>
+        </div>
+    </div>
+    <div class="haveBooking">
+        <div class="content">
+            <div class="container">
+                <div class="picture">
+                </div>
+                <div class="infoBox">
+                    <div class="info">
+                        <h2>台北一日遊：</h2>
+                        <h2 id="infoName"></h2>
+                    </div>
+                    <div class="date">
+                        <span>日期：</span>
+                        <h3></h3>
+                    </div>
+                    <div class="time">
+                        <span>時間：</span>
+                        <h3></h3>
+                    </div>
+                    <div class="money">
+                        <span>費用：</span>
+                        <h3></h3>
+                    </div>
+                    <div class="place">
+                        <span>地點：</span>
+                        <h3></h3>
+                    </div>
+                </div>
+                <img class="deleteBox" src="/icon/icon_delete.png">
+            </div>
+
+        </div>
+        <hr>
+        <div class="contact">
+            <div class="contactInfo">
+                <h2>您的聯絡資訊</h2>
+                <div class="contactName">
+                    <h2>聯絡姓名：</h2>
+                    <input type="text">
+                </div>
+                <div class="contactEmail">
+                    <h2>連絡信箱：</h2>
+                    <input type="text">
+                </div>
+                <div class="contactPhone">
+                    <h2>手機號碼：</h2>
+                    <input type="text">
+                </div>
+                <h3>請保持手機暢通，準時到達，導覽人員將用手機與您聯繫，務必留下正確的聯絡方式。</h3>
+            </div>
+        </div>
+        <hr>
+        <div class="credit">
+            <div class="creditCard">
+                <h2>信用卡付款資訊</h2>
+                <div class="creditName">
+                    <h2>卡片號碼：</h2>
+                    <input type="text" placeholder="**** **** **** ****">
+                </div>
+                <div class="creditEmail">
+                    <h2>過期時間：</h2>
+                    <input type="text" placeholder="MM/YY">
+                </div>
+                <div class="creditPhone">
+                    <h2>驗證密碼：</h2>
+                    <input type="text" placeholder="CVV">
+                </div>
+            </div>
+        </div>
+        <hr>
+        <div class="order">
+            <div class="pay">
+                <h2>總價：新台幣 2000 元</h2>
+                <button class="button">確認訂購並付款</button>
+            </div>
+        </div>
+        <div class="footer">
+            <h3>COPYRIGHT © 2021 台北一日遊</h3>
+        </div>
+    </div>
+
+    <script src="/js/user.js"></script>
+    <script src="/js/booking.js"></script>
+
+</body>
+
+</html>

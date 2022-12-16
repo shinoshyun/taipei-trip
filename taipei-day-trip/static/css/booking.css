@@ -1,0 +1,422 @@
+@import url(https://fonts.googleapis.com/css2?family=Noto+Sans+TC&display=swap);
+
+body {
+    font-family: "Noto Sans TC";
+    color: #666666;
+    font-size: 16px;
+}
+
+.taipetTitle {
+    cursor: pointer;
+}
+
+.navbar {
+    z-index: 200;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background-color: #ffffff;
+    border-bottom: solid 0.5px #E8E8E8;
+}
+
+.navwrap {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: auto;
+    height: 54px;
+}
+
+.title h2 {
+    margin: auto 0;
+    font-size: 30px;
+    font-weight: 700;
+    color: #448899;
+    padding-left: 10px;
+}
+
+.menu {
+    display: flex;
+}
+
+.reserve_btn,
+.signup_btn,
+.logoutBtn {
+    text-decoration: none;
+    font-weight: 500;
+    color: #666666;
+    margin-left: 20px;
+    cursor: pointer;
+    box-sizing: border-box;
+}
+
+.signup_btn,
+.logoutBtn {
+    margin-right: 10px;
+}
+
+/* --------------------------- */
+
+.reply {
+    margin-top: 100px;
+    width: 100%;
+}
+
+.replyMsg {
+    margin: 0 auto;
+    max-width: 990px;
+    display: flex;
+}
+
+.reply h3 {
+    font-weight: 700;
+    font-size: 19px;
+    color: #666666;
+}
+
+.content {
+    margin-top: 35px;
+    max-width: 100%;
+}
+
+.container {
+    margin: 0 auto;
+    width: 990px;
+    display: grid;
+    grid-template-columns: 266px auto;
+    grid-template-rows: 200px;
+    gap: 30px;
+    position: relative;
+    margin-bottom: 40px;
+}
+
+.picture img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.deleteBox {
+    position: absolute;
+    right: 50px;
+    cursor: pointer;
+}
+
+.info,
+.date,
+.time,
+.money,
+.place {
+    display: flex;
+}
+
+.date,
+.time,
+.money,
+.place {
+    margin-bottom: 13px;
+}
+
+
+.info h2 {
+    font-weight: 700;
+    color: #448899;
+    margin-top: 3px;
+    margin-bottom: 20px;
+}
+
+.date span,
+.time span,
+.money span,
+.place span {
+    font-weight: 700;
+}
+
+hr {
+    border: solid 0.5px #E8E8E8;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.contact,
+.credit {
+    width: 100%;
+    margin: 40px 0px;
+}
+
+.contactInfo,
+.creditCard,
+.pay {
+    margin: 0 auto;
+    width: 990px;
+}
+
+.contactInfo h2,
+.creditCard h2 {
+    font-size: 19px;
+    font-weight: 700;
+    color: #666666;
+    margin-bottom: 20px;
+}
+
+.contactInfo h3 {
+    font-weight: 700;
+    color: #666666;
+    margin-bottom: 45px;
+}
+
+.contactName,
+.contactEmail,
+.contactPhone,
+.creditName,
+.creditEmail,
+.creditPhone {
+    display: flex;
+    margin-bottom: 15px;
+    align-items: baseline;
+}
+
+.contactName h2,
+.contactEmail h2,
+.contactPhone h2,
+.creditName h2,
+.creditEmail h2,
+.creditPhone h2 {
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.contactName input,
+.contactEmail input,
+.contactPhone input,
+.creditName input,
+.creditEmail input,
+.creditPhone input {
+    width: 200px;
+    height: 38px;
+    padding: 10px;
+    box-sizing: border-box;
+    border-radius: 5px;
+    border: solid 1px #E8E8E8;
+    font-weight: 500;
+    align-items: center;
+    font-size: 16px;
+}
+
+
+
+/* --------------------------------- */
+
+
+.order {
+    width: 100%;
+    margin: 40px 0px 62px;
+}
+
+.pay {
+    text-align: right;
+}
+
+.pay h2 {
+    margin-bottom: 25px;
+    font-weight: 700;
+}
+
+.button {
+    font-family: "Noto Sans TC";
+    font-size: 19px;
+    font-weight: 400;
+    color: #FFFFFF;
+    background-color: #448899;
+    text-align: center;
+    width: 173px;
+    height: 42px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+}
+
+/* -------footer--------- */
+.haveBooking {
+    display: none;
+}
+
+.haventBooking {
+    margin-top: 35px;
+}
+
+.haventContent {
+    margin: 0 auto;
+    width: 990px;
+    margin-bottom: 40px;
+}
+
+
+.footer,
+.footerB {
+    background-color: #757575;
+}
+
+.footer h3,
+.footerB h3 {
+    font-family: "Noto Sans TC";
+    font-weight: 700;
+    font-size: 16px;
+    color: #ffffff;
+    text-align: center;
+    padding: 45px;
+    box-sizing: border-box;
+}
+
+.footerB h3 {
+    padding-bottom: 810px;
+}
+
+@media (max-width: 1300px) {
+    hr {
+        max-width: 94%;
+    }
+
+    .navbar {
+        width: 100%;
+    }
+}
+
+@media(max-width: 1100px) {
+
+    .replyMsg,
+    .container,
+    .contactInfo,
+    .creditCard,
+    .pay,
+    .haventContent {
+        width: 95%;
+    }
+}
+
+@media (max-width: 640px) {
+    .container {
+        grid-template-columns: 1fr;
+    }
+
+    .deleteBox {
+        bottom: -20px;
+        right: 0px;
+    }
+}
+
+/* -----------signup------------ */
+
+/* The Modal (background) */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 300;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgb(0, 0, 0, 0.25);
+    padding-top: 78px;
+}
+
+.signin,
+.signup {
+    width: 340px;
+    background-color: #ffffff;
+    margin: 0 auto;
+    border-radius: 5px;
+}
+
+
+.modal-container {
+    padding: 0px 15px 7px;
+    box-sizing: border-box;
+    position: relative;
+}
+
+.modal-container h2 {
+    font-size: 24px;
+    text-align: center;
+    font-weight: 700;
+    color: #666666;
+    margin: 15px 0px;
+
+}
+
+.clickHere {
+    text-align: center;
+    margin-top: 4px;
+    color: #666666;
+    text-decoration: none;
+}
+
+.notok {
+    color: #b83e3e;
+    margin-bottom: 2px;
+}
+
+.messageText,
+.ok {
+    color: #0fc4c4;
+    margin-bottom: 2px;
+}
+
+.toSignup,
+.toSignin {
+    cursor: pointer;
+}
+
+/* The Close Button (x) */
+.close {
+    position: absolute;
+    right: 12px;
+    font-size: 25px;
+    font-weight: 400;
+    color: #666666;
+    top: -6px;
+    cursor: pointer;
+}
+
+.colorbar {
+    width: 100%;
+    height: 10px;
+    border: none;
+    background: linear-gradient(270deg, #337788 0%, #66AABB 100%);
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+
+.login_email,
+.login_password,
+.signup_name,
+.signup_email,
+.signup_password {
+    width: 100%;
+    height: 47px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    border: solid 1px #CCCCCC;
+    background: #FFFFFF;
+    padding: 15px;
+    box-sizing: border-box;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.signinbtn button,
+.signupbtn button {
+    background-color: #448899;
+    color: white;
+    border: none;
+    width: 100%;
+    height: 47px;
+    font-size: 19px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.logoutBtn {
+    display: none;
+}

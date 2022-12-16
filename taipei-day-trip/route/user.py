@@ -1,4 +1,4 @@
-from flask import Flask, Blueprint, request, jsonify, make_response, request
+from flask import Blueprint, request, jsonify, make_response, request
 import jwt
 import datetime
 
@@ -8,7 +8,7 @@ mysql_connection = mysql.connector.connect(
     host='localhost',
     port='3306',
     user='root',
-    password='password',
+    password='dumplings67',
     database='attractions_data'
 )
 
@@ -58,14 +58,12 @@ def getcookie():
 	if token is not None:
 		data = jwt.decode(token, "mykey123", algorithms=["HS256"])
 		# data = json.dumps(data)
-		res = ({"data": data})
-		return res
 		
-
 	else:
 		data = None
-		res = ({"data": data})
-		return res
+		
+	res = make_response(({"data": data}), 200)
+	return res
 	
 
 @user.route("/api/user/auth", methods=["PUT"])
@@ -94,12 +92,12 @@ def put():
 			res.set_cookie(key="token", value=token, expires=expiration_time)
 		
 		else:
-			res = make_response(jsonify({
+			res = make_response(({
 				"error": True,
 				"message": "登入失敗，帳號或密碼錯誤"}), 400)
 	
 	except:
-		res = make_response(jsonify({
+		res = make_response(({
 			"error": True,
 			"message": "伺服器內部錯誤"}), 500)
 

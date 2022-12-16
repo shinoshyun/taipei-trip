@@ -134,7 +134,18 @@ logoutBtn.addEventListener("click", function () {
         if (response.status == 200) {
             logoutBtn.style.display = "none";
             signup_BTN.style.display = "block";
+            location.reload();
         }
     })
 })
 
+
+const reserveBtn = document.querySelector(".reserve_btn")
+reserveBtn.addEventListener("click", function () {
+    if (document.cookie.indexOf('token=') === -1) {
+        id01.style.display = "block";
+
+    } else {
+        location.href = '/booking';
+    }
+})

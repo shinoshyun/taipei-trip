@@ -108,3 +108,57 @@ document.body.addEventListener('change', function (element) {
     }
     result.textContent = message;
 });
+
+const payBtn = document.querySelector(".button")
+payBtn.addEventListener("click", function () {
+
+    if (document.cookie.indexOf('token=') === -1) {
+        id01.style.display = "block";
+
+    } else {
+        const date = document.querySelector(".date").value;
+        const result = document.querySelector("#result").textContent;
+        let resultArray = result.split(" ");
+        let numberString = resultArray[1];
+        let numberValue = parseInt(numberString);
+        // console.log(numberValue);
+
+        let timePeriod;
+        if (numberValue == 2000) {
+            timePeriod = "morning";
+        } else {
+            timePeriod = "afternoon";
+        }
+
+        let entry = {
+            attractionId: attraction,
+            date: date,
+            time: timePeriod,
+            price: numberValue
+        };
+        // console.log(entry);
+
+        fetch('/api/booking', {
+            method: "POST",
+            credentials: "include",
+            body: JSON.stringify(entry),
+            cache: "no-cache",
+            headers: new Headers({
+                "content-type": "application/json"
+            })
+        }).then(function (response) {
+            // console.log(response)
+            return response.json()
+        }).then(function (data) {
+            if (data.ok == true) {
+                // console.log(data)
+                location.href = '/booking'
+
+            } else {
+                console.log(data.message);
+                return;
+            }
+        })
+    }
+})
+
