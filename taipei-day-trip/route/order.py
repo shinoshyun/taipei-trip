@@ -1,4 +1,4 @@
-from flask import Flask, Blueprint, jsonify, make_response, request
+from flask import Flask, Blueprint, make_response, request
 from dotenv import load_dotenv
 import os, requests, json, jwt, re
 from datetime import datetime
@@ -75,7 +75,7 @@ def orderPost():
 
                 tappayData = {
                     "prime": prime,
-                    "partner_key": "partner_jDUqNxlFSobG8RNtsbjIURypCQ3ZGttDFob99hZyyHRoucG21qgzm6X7",
+                    "partner_key": os.getenv("tappayKey"),
                     "merchant_id": "shino_TAISHIN",
                     "details":"TapPay Test",
                     "amount": 100,
@@ -90,7 +90,7 @@ def orderPost():
 
                 headers = {
                 "Content-Type": "application/json",
-                "x-api-key": "partner_jDUqNxlFSobG8RNtsbjIURypCQ3ZGttDFob99hZyyHRoucG21qgzm6X7"
+                "x-api-key": os.getenv("tappayKey")
                 }
                 tapPayRequests = requests.post("https://sandbox.tappaysdk.com/tpc/payment/pay-by-prime", data=tapPayData, headers=headers).json()
                 
@@ -146,8 +146,6 @@ def orderGet(orderNumber):
             check_value=(orderNumber,)
             cursor.execute(check, check_value)
             records = cursor.fetchone()
-            # print(records)
-            # print("AAA")
 
             if records:
                 jpg = re.split(",", records["images"])
@@ -186,7 +184,7 @@ def orderGet(orderNumber):
 
 
     except Exception as e:
-        print(e)
+        # print(e)
         res = make_response(({
 			"error": True,
 			"message": "伺服器內部錯誤"}), 500)
