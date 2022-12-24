@@ -175,5 +175,5 @@ def categories():
 
 app.run(host="0.0.0.0", port=3000, debug=True)
 
-cursor.close()
-mysql_connection.close()
+# cursor.close()
+# mysql_connection.close()
