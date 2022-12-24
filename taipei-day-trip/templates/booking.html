@@ -1,3 +1,4 @@
+{% extends "navbar.html" %}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -6,71 +7,13 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/css/reset.css">
+    {% block css %}
     <link rel="stylesheet" href="/css/booking.css">
-    <title>Document</title>
+    {% endblock css %}
 </head>
 
 <body>
-    <div class="navbar">
-        <div class="navwrap">
-            <div class="title">
-                <h2 class="taipetTitle">台北一日遊</h2>
-            </div>
-            <div class="menu">
-                <div class="reserve_btn">預定行程</div>
-                <div class="signup_btn">登入/註冊</div>
-                <div class="logoutBtn">登出系統</div>
-            </div>
-        </div>
-    </div>
-    <div id="id01" class="modal">
-        <form class="signin-content">
-            <div class="signin">
-                <div class="colorbar"></div>
-                <div class="modal-container">
-                    <span class="close" title="Close Modal">&times;</span>
-                    <h2>登入會員帳號</h2>
-                    <div class="emailPsw">
-                        <input class="login_email" type="text" placeholder="輸入電子信箱" required />
-                        <input class="login_password" type="password" placeholder="輸入密碼" required />
-                    </div>
-                    <div class="signinbtn"><button type='button'>登入帳戶</button></div>
-                    <div class="clickHere">
-                        <!-- <h3 id="messageTextOK" class="ok"></h3> -->
-                        <h3 id="messageText" class="notok"></h3>
-                        <span>還沒有帳戶？</span>
-                        <span class="toSignup">點此註冊</span>
-                    </div>
-                </div>
-            </div>
-        </form>
-    </div>
-
-    <div id="id02" class="modal">
-        <form class="signup-content">
-            <div class="signup">
-                <div class="colorbar"></div>
-                <div class="modal-container">
-                    <span onclick="document.getElementById('id02').style.display='none'" class="close"
-                        title="Close Modal">&times;</span>
-                    <h2>登入會員帳號</h2>
-                    <div class="nameEmailPsw">
-                        <input class="signup_name" type="text" placeholder="輸入姓名" required />
-                        <input class="signup_email" type="text" placeholder="輸入電子郵件" required />
-                        <input class="signup_password" type="password" placeholder="輸入密碼" required />
-                    </div>
-                    <div class="signupbtn"><button type='button'>註冊新帳戶</button></div>
-                    <div class="clickHere">
-                        <h3 id="registerTextOK" class="ok"></h3>
-                        <h3 id="registerText" class="notok"></h3>
-                        <span>已經有帳戶了？</span>
-                        <span class="toSignin">點此登入</span>
-                    </div>
-                </div>
-            </div>
-        </form>
-    </div>
-
+    {% block html %}
     <div class="reply">
         <div class="replyMsg">
             <h3>您好，</h3>
@@ -131,7 +74,7 @@
                 </div>
                 <div class="contactPhone">
                     <h2>手機號碼：</h2>
-                    <input type="text">
+                    <input type="text" maxlength="10" pattern="09\d{2}-\d{6}" required="required">
                 </div>
                 <h3>請保持手機暢通，準時到達，導覽人員將用手機與您聯繫，務必留下正確的聯絡方式。</h3>
             </div>
@@ -142,15 +85,18 @@
                 <h2>信用卡付款資訊</h2>
                 <div class="creditName">
                     <h2>卡片號碼：</h2>
-                    <input type="text" placeholder="**** **** **** ****">
+                    <div class="tpfield" id="card-number"></div>
+                    <h3></h3>
                 </div>
                 <div class="creditEmail">
                     <h2>過期時間：</h2>
-                    <input type="text" placeholder="MM/YY">
+                    <div class="tpfield" id="card-expiration-date"></div>
+                    <h3></h3>
                 </div>
-                <div class="creditPhone">
+                <div class="creditPassword">
                     <h2>驗證密碼：</h2>
-                    <input type="text" placeholder="CVV">
+                    <div class="tpfield" id="card-ccv"></div>
+                    <h3></h3>
                 </div>
             </div>
         </div>
@@ -165,9 +111,13 @@
             <h3>COPYRIGHT © 2021 台北一日遊</h3>
         </div>
     </div>
+    {% endblock html %}
 
-    <script src="/js/user.js"></script>
+    {% block js %}
+    <script src="https://js.tappaysdk.com/sdk/tpdirect/v5.14.0"></script>
     <script src="/js/booking.js"></script>
+    <script src="/js/order.js"></script>
+    {% endblock js %}
 
 </body>
 

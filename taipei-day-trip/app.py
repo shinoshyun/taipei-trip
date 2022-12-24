@@ -1,32 +1,32 @@
 from flask import Flask, request, render_template, redirect, session, jsonify
-import re
+import re, os
+from dotenv import load_dotenv
 from route.user import user
 from route.booking import booking
+from route.order import order
 
-
+load_dotenv()
 
 app=Flask(__name__, static_folder="static",
             static_url_path="/")
 
 app.register_blueprint(user, user_prefix='') 
 app.register_blueprint(booking, user_prefix='') 
+app.register_blueprint(order, user_prefix='') 
 
 app.config["JSON_AS_ASCII"]=False
 app.config["TEMPLATES_AUTO_RELOAD"]=True
 app.config["JSON_SORT_KEYS"] = False
-
-
-
 
 import mysql.connector
 mysql_connection = mysql.connector.connect(
     host='localhost',
     port='3306',
     user='root',
-    password='password',
+    password=os.getenv("password"),
     database='attractions_data'
 )
-cursor = mysql_connection.cursor(buffered=True)
+cursor = mysql_connection.cursor(buffered=True, dictionary=True)
 
 
 
@@ -62,29 +62,31 @@ def attractions():
 	check_value = (keyword, "%" + keyword + "%", page*12)
 	cursor.execute(check, check_value)
 	records = cursor.fetchall()	
-	
+	# print(len(records))
 	# 搜尋比對出的資料庫比數
 	checkCount="SELECT COUNT(*) FROM attractions WHERE category=%s OR name LIKE %s ORDER BY id"
 	checkCount_value = (keyword, "%" + keyword + "%")
 	cursor.execute(checkCount, checkCount_value)
-	realSum = 0
-	sum = cursor.fetchall()
-	for i in sum:
-		realSum=i[0]
-		
+	
+	sum = cursor.fetchone()
+	# print(sum['COUNT(*)'])
+	realSum = sum['COUNT(*)']
+	# for i in sum:
+	# 	realSum=i[0]
+	# print(realSum)
 	try:		
 		for onePlace in records:
-			jpg = re.split(",", onePlace[9])			
+			jpg = re.split(",", onePlace["images"])			
 			data = {
-        			"id": onePlace[0],
-        			"name": onePlace[1],
-        			"category": onePlace[2],
-        			"description": onePlace[3],
-        			"address": onePlace[4],
-        			"transport": onePlace[5],
-        			"mrt": onePlace[6],
-        			"lat": onePlace[7],
-        			"lng": onePlace[8],
+        			"id": onePlace["id"],
+        			"name": onePlace["name"],
+        			"category": onePlace["category"],
+        			"description": onePlace["description"],
+        			"address": onePlace["address"],
+        			"transport": onePlace["transport"],
+        			"mrt": onePlace["mrt"],
+        			"lat": onePlace["lat"],
+        			"lng": onePlace["lng"],
         			"images": jpg[:-1]
         		}			
 			saveDatas.append(data)
@@ -116,17 +118,17 @@ def attractionId(attractionId):
 	
 	
 	try:
-		jpg = re.split(",", records[9])
+		jpg = re.split(",", records["images"])
 		data = {
-        	"id": records[0],
-        	"name": records[1],
-        	"category": records[2],
-        	"description": records[3],
-        	"address": records[4],
-        	"transport": records[5],
-        	"mrt": records[6],
-        	"lat": records[7],
-        	"lng": records[8],
+        	"id": records["id"],
+        	"name": records["name"],
+        	"category": records["category"],
+        	"description": records["description"],
+        	"address": records["address"],
+        	"transport": records["transport"],
+        	"mrt": records["mrt"],
+        	"lat": records["lat"],
+        	"lng": records["lng"],
         	"images": jpg[:-1]
         	}
 		return jsonify({"data": data}), 200
@@ -157,8 +159,9 @@ def categories():
 		cursor.execute("SELECT DISTINCT category FROM attractions")
 
 		records = cursor.fetchall()
+		# print(records)
 		for i in records:
-			saveDatas.append(i[0])
+			saveDatas.append(i["category"])
 		return jsonify({"data": saveDatas}), 200
 
 	except:
@@ -169,4 +172,8 @@ def categories():
 	return jsonify(data), 500
 
 
-app.run(host="0.0.0.0", port=3000)
+
+app.run(host="0.0.0.0", port=3000, debug=True)
+
+cursor.close()
+mysql_connection.close()

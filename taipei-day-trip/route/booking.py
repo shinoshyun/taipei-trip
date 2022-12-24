@@ -1,5 +1,9 @@
 from flask import Flask, Blueprint, jsonify, make_response, request
-import re, jwt
+from dotenv import load_dotenv
+import re, jwt, os
+
+load_dotenv()
+
 
 booking = Blueprint('booking', __name__)
 import mysql.connector
@@ -7,11 +11,11 @@ mysql_connection = mysql.connector.connect(
     host='localhost',
     port='3306',
     user='root',
-    password='password',
+    password=os.getenv("password"),
     database='attractions_data'
 )
 
-cursor = mysql_connection.cursor(buffered=True)
+cursor = mysql_connection.cursor(buffered=True, dictionary=True)
 
 
 
@@ -89,17 +93,18 @@ def bookingGet():
         records = cursor.fetchone()
     
         if records:
-            jpg = records[3].split(",")
+            jpg = re.split(",", records["images"])	
+            # jpg = records["image"].split(",")
             data = {
             "attraction" : {
-        	    "id": records[0],
-        	    "name": records[1],
-        	    "address": records[2],
+        	    "id": records["id"],
+        	    "name": records["name"],
+        	    "address": records["address"],
         	    "image": jpg[0]
         },
-        	"date": records[4],
-        	"time": records[5],
-        	"price": records[6]
+        	"date": records["date"],
+        	"time": records["time"],
+        	"price": records["price"]
         }	
             
         else:
@@ -136,3 +141,4 @@ def bookingDelete():
 			"error": True,
 			"message": "未登入系統，拒絕存取"}), 403)
         return res
+

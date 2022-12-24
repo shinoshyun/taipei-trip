@@ -1,62 +1,5 @@
 @import url(https://fonts.googleapis.com/css2?family=Noto+Sans+TC&display=swap);
 
-body {
-    font-family: "Noto Sans TC";
-    color: #666666;
-    font-size: 16px;
-}
-
-.taipetTitle {
-    cursor: pointer;
-}
-
-.navbar {
-    z-index: 200;
-    position: fixed;
-    top: 0;
-    width: 100%;
-    background-color: #ffffff;
-    border-bottom: solid 0.5px #E8E8E8;
-}
-
-.navwrap {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    max-width: 1200px;
-    margin: auto;
-    height: 54px;
-}
-
-.title h2 {
-    margin: auto 0;
-    font-size: 30px;
-    font-weight: 700;
-    color: #448899;
-    padding-left: 10px;
-}
-
-.menu {
-    display: flex;
-}
-
-.reserve_btn,
-.signup_btn,
-.logoutBtn {
-    text-decoration: none;
-    font-weight: 500;
-    color: #666666;
-    margin-left: 20px;
-    cursor: pointer;
-    box-sizing: border-box;
-}
-
-.signup_btn,
-.logoutBtn {
-    margin-right: 10px;
-}
-
-/* --------------------------- */
 
 .reply {
     margin-top: 100px;
@@ -157,7 +100,7 @@ hr {
     font-size: 19px;
     font-weight: 700;
     color: #666666;
-    margin-bottom: 20px;
+    /* margin-bottom: 20px; */
 }
 
 .contactInfo h3 {
@@ -171,10 +114,10 @@ hr {
 .contactPhone,
 .creditName,
 .creditEmail,
-.creditPhone {
+.creditPassword {
     display: flex;
-    margin-bottom: 15px;
-    align-items: baseline;
+    margin: 20px 0px 15px;
+    align-items: center;
 }
 
 .contactName h2,
@@ -182,17 +125,21 @@ hr {
 .contactPhone h2,
 .creditName h2,
 .creditEmail h2,
-.creditPhone h2 {
+.creditPassword h2 {
     font-size: 16px;
     font-weight: 500;
+}
+
+.creditName h3,
+.creditEmail h3,
+.creditPassword h3 {
+    margin-left: 10px;
 }
 
 .contactName input,
 .contactEmail input,
 .contactPhone input,
-.creditName input,
-.creditEmail input,
-.creditPhone input {
+.tpfield {
     width: 200px;
     height: 38px;
     padding: 10px;
@@ -304,119 +251,4 @@ hr {
         bottom: -20px;
         right: 0px;
     }
-}
-
-/* -----------signup------------ */
-
-/* The Modal (background) */
-.modal {
-    display: none;
-    position: fixed;
-    z-index: 300;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background-color: rgb(0, 0, 0, 0.25);
-    padding-top: 78px;
-}
-
-.signin,
-.signup {
-    width: 340px;
-    background-color: #ffffff;
-    margin: 0 auto;
-    border-radius: 5px;
-}
-
-
-.modal-container {
-    padding: 0px 15px 7px;
-    box-sizing: border-box;
-    position: relative;
-}
-
-.modal-container h2 {
-    font-size: 24px;
-    text-align: center;
-    font-weight: 700;
-    color: #666666;
-    margin: 15px 0px;
-
-}
-
-.clickHere {
-    text-align: center;
-    margin-top: 4px;
-    color: #666666;
-    text-decoration: none;
-}
-
-.notok {
-    color: #b83e3e;
-    margin-bottom: 2px;
-}
-
-.messageText,
-.ok {
-    color: #0fc4c4;
-    margin-bottom: 2px;
-}
-
-.toSignup,
-.toSignin {
-    cursor: pointer;
-}
-
-/* The Close Button (x) */
-.close {
-    position: absolute;
-    right: 12px;
-    font-size: 25px;
-    font-weight: 400;
-    color: #666666;
-    top: -6px;
-    cursor: pointer;
-}
-
-.colorbar {
-    width: 100%;
-    height: 10px;
-    border: none;
-    background: linear-gradient(270deg, #337788 0%, #66AABB 100%);
-    border-top-left-radius: 5px;
-    border-top-right-radius: 5px;
-}
-
-.login_email,
-.login_password,
-.signup_name,
-.signup_email,
-.signup_password {
-    width: 100%;
-    height: 47px;
-    margin-bottom: 10px;
-    border-radius: 5px;
-    border: solid 1px #CCCCCC;
-    background: #FFFFFF;
-    padding: 15px;
-    box-sizing: border-box;
-    font-size: 16px;
-    font-weight: 500;
-}
-
-.signinbtn button,
-.signupbtn button {
-    background-color: #448899;
-    color: white;
-    border: none;
-    width: 100%;
-    height: 47px;
-    font-size: 19px;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-.logoutBtn {
-    display: none;
 }

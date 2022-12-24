@@ -7,7 +7,7 @@ fetch('/api/user/auth', {
 }).then(function (response) {
     return response.json()
 }).then(function (data) {
-    console.log(data);
+    // console.log(data);
     if (data.data == null) {
         location.href = "/";
     }
@@ -18,6 +18,7 @@ fetch('/api/user/auth', {
 })
 
 
+
 fetch('/api/booking', {
     method: "GET"
 }).then(function (response) {
@@ -25,8 +26,6 @@ fetch('/api/booking', {
 }).then(function (data) {
 
     if (data.data == null) {
-        // haventBooking.style.display = "block";
-        // haveBooking.style.display = "none";
         return;
     }
     else {
@@ -41,11 +40,11 @@ fetch('/api/booking', {
 
         const price = dateInfo.price;
         if (price == 2000) {
-            document.querySelector(".money h3").textContent = "新台幣 2000 元";
-            document.querySelector(".pay h2").textContent = "總價：新台幣 2000 元";
+            document.querySelector(".money h3").textContent = "新台幣 " + price + " 元";
+            document.querySelector(".pay h2").textContent = "總價：新台幣 " + price + " 元";
         } else {
-            document.querySelector(".money h3").textContent = "新台幣 2500 元";
-            document.querySelector(".pay h2").textContent = "總價：新台幣 2500 元";
+            document.querySelector(".money h3").textContent = "新台幣 " + price + " 元";
+            document.querySelector(".pay h2").textContent = "總價：新台幣 " + price + " 元";
         }
 
         const time = dateInfo.time;

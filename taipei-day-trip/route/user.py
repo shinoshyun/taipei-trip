@@ -1,6 +1,9 @@
 from flask import Blueprint, request, jsonify, make_response, request
-import jwt
+from dotenv import load_dotenv
+import jwt, os
 import datetime
+
+load_dotenv()
 
 user = Blueprint('user', __name__)
 import mysql.connector
@@ -8,12 +11,11 @@ mysql_connection = mysql.connector.connect(
     host='localhost',
     port='3306',
     user='root',
-    password='password',
+    password=os.getenv("password"),
     database='attractions_data'
 )
 
-cursor = mysql_connection.cursor(buffered=True)
-
+cursor = mysql_connection.cursor(buffered=True, dictionary=True)
 
 @user.route("/api/user", methods=["POST"])
 def post():
@@ -57,7 +59,6 @@ def getcookie():
 
 	if token is not None:
 		data = jwt.decode(token, "mykey123", algorithms=["HS256"])
-		# data = json.dumps(data)
 		
 	else:
 		data = None
@@ -79,13 +80,14 @@ def put():
 		check_val = (email, password)
 		cursor.execute(check, check_val)
 		records = cursor.fetchone()
+		print(records)
 
-		if (email == records[2]) and (password== records[3]):
+		if (email == records["email"]) and (password== records["password"]):
 			
 			token = jwt.encode({
-				"id": records[0],
-				"name": records[1],
-            	"email": records[2]}, "mykey123", algorithm="HS256")
+				"id": records["id"],
+				"name": records["name"],
+            	"email": records["email"]}, "mykey123", algorithm="HS256")
 			
 			res = make_response(jsonify({"ok": True}), 200)	
 			expiration_time = datetime.datetime.utcnow() + datetime.timedelta(days=7)
@@ -111,3 +113,5 @@ def delete():
 	res.set_cookie(key='token', value='', expires=0)
 
 	return res
+
+
