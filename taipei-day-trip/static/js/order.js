@@ -164,7 +164,7 @@ payBtn.addEventListener("click", function (event) {
                 return response.json()
             }).then(function (data) {
                 if (data.data !== null) {
-                    orderNumber = data.data.number;
+                    let orderNumber = data.data.number;
                     // console.log(data.data.number);
                     location.href = `/thankyou?number=${orderNumber}`;
                     return;

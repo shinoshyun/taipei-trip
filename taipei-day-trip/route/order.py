@@ -125,7 +125,7 @@ def orderPost():
 
 
     except Exception as e:
-            print(e)
+            # print(e)
             res = make_response(({
 			"error": True,
 			"message": "伺服器內部錯誤"}), 500)
