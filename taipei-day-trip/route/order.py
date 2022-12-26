@@ -7,21 +7,25 @@ load_dotenv()
 
 order = Blueprint('order', __name__)
 import mysql.connector
-mysql_connection = mysql.connector.connect(
-    host='localhost',
-    port='3306',
+import mysql.connector.pooling
+
+pool = mysql.connector.pooling.MySQLConnectionPool(
+    host='127.0.0.1',
+    # port='3306',
     user='root',
     password=os.getenv("password"),
-    database='attractions_data'
+    database='attractions_data',
+    pool_name='my_pool',
+    pool_size=5,
+    pool_reset_session=True
+    
 )
-
-cursor = mysql_connection.cursor(buffered=True, dictionary=True)
-
-
 
 @order.route("/api/orders", methods=["POST"])
 def orderPost():
     try:
+        mysql_connection = pool.get_connection()
+        cursor = mysql_connection.cursor(buffered=True, dictionary=True)
         token = request.cookies.get("token")
         
         if token:
@@ -32,12 +36,8 @@ def orderPost():
             price = req["order"]["price"]
             trip = req["order"]["trip"]
             attractionId = trip["attraction"]["id"]
-            attractionName = trip["attraction"]["name"]
-            attractionAddress = trip["attraction"]["address"]
-            attractionImage = trip["attraction"]["image"]
             date = trip["date"]
             time = trip["time"]
-
             contactName = req["order"]["contact"]["name"]
             contactEmail = req["order"]["contact"]["email"]
             contactPhone = req["order"]["contact"]["phone"]
@@ -131,10 +131,17 @@ def orderPost():
 			"message": "伺服器內部錯誤"}), 500)
             return res
 
+    finally:
+        cursor.close()
+        mysql_connection.close()
+
 
 @order.route("/api/orders/<orderNumber>", methods=["GET"])
 def orderGet(orderNumber):
     try:
+        mysql_connection = pool.get_connection()
+        cursor = mysql_connection.cursor(buffered=True, dictionary=True)
+
         token = request.cookies.get("token")
 
         if token:
@@ -189,3 +196,7 @@ def orderGet(orderNumber):
 			"error": True,
 			"message": "伺服器內部錯誤"}), 500)
         return res
+
+    finally:
+        cursor.close()
+        mysql_connection.close()

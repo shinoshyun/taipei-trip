@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template, redirect, session, jsonify
+from flask import Flask, request, render_template
 import re, os
 from dotenv import load_dotenv
 from route.user import user
@@ -19,16 +19,31 @@ app.config["TEMPLATES_AUTO_RELOAD"]=True
 app.config["JSON_SORT_KEYS"] = False
 
 import mysql.connector
-mysql_connection = mysql.connector.connect(
-    host='localhost',
-    port='3306',
+import mysql.connector.pooling
+
+pool = mysql.connector.pooling.MySQLConnectionPool(
+    host='127.0.0.1',
+    # port='3306',
     user='root',
     password=os.getenv("password"),
-    database='attractions_data'
+    database='attractions_data',
+    pool_name='my_pool',
+    pool_size=5,
+	pool_reset_session=True
 )
-cursor = mysql_connection.cursor(buffered=True, dictionary=True)
 
 
+
+
+# import mysql.connector
+# mysql_connection = mysql.connector.connect(
+#     host='localhost',
+#     port='3306',
+#     user='root',
+#     password=os.getenv("password"),
+#     database='attractions_data'
+# )
+# cursor = mysql_connection.cursor(buffered=True, dictionary=True)
 
 
 # Pages
@@ -51,30 +66,35 @@ def thankyou():
 
 @app.route("/api/attractions", methods=["GET"])
 def attractions():
-
-	page = request.args.get("page", 0)
-	page = int(page)
-	keyword = request.args.get("keyword", "")
-
-	# 搜尋全部資料
-	saveDatas=[]
-	check = "SELECT * FROM attractions WHERE category=%s OR name LIKE %s ORDER BY id LIMIT 12 OFFSET %s"
-	check_value = (keyword, "%" + keyword + "%", page*12)
-	cursor.execute(check, check_value)
-	records = cursor.fetchall()	
-	# print(len(records))
-	# 搜尋比對出的資料庫比數
-	checkCount="SELECT COUNT(*) FROM attractions WHERE category=%s OR name LIKE %s ORDER BY id"
-	checkCount_value = (keyword, "%" + keyword + "%")
-	cursor.execute(checkCount, checkCount_value)
 	
-	sum = cursor.fetchone()
-	# print(sum['COUNT(*)'])
-	realSum = sum['COUNT(*)']
-	# for i in sum:
-	# 	realSum=i[0]
-	# print(realSum)
-	try:		
+
+	try:
+		mysql_connection = pool.get_connection()
+		cursor = mysql_connection.cursor(buffered=True, dictionary=True)
+
+		page = request.args.get("page", 0)
+		page = int(page)
+		keyword = request.args.get("keyword", "")
+
+		# 搜尋全部資料
+		saveDatas=[]
+		check = "SELECT * FROM attractions WHERE category=%s OR name LIKE %s ORDER BY id LIMIT 12 OFFSET %s"
+		check_value = (keyword, "%" + keyword + "%", page*12)
+		cursor.execute(check, check_value)
+		records = cursor.fetchall()	
+		# print(len(records))
+		# 搜尋比對出的資料庫比數
+		checkCount="SELECT COUNT(*) FROM attractions WHERE category=%s OR name LIKE %s ORDER BY id"
+		checkCount_value = (keyword, "%" + keyword + "%")
+		cursor.execute(checkCount, checkCount_value)
+		
+		sum = cursor.fetchone()
+		# print(sum['COUNT(*)'])
+		realSum = sum['COUNT(*)']
+		# for i in sum:
+		# 	realSum=i[0]
+		# print(realSum)
+			
 		for onePlace in records:
 			jpg = re.split(",", onePlace["images"])			
 			data = {
@@ -92,32 +112,36 @@ def attractions():
 			saveDatas.append(data)
 
 		if page < realSum/12-1 :
-			return jsonify({"nextPage": page+1,"data": saveDatas})
+			return ({"nextPage": page+1,"data": saveDatas})
 		else:
-			return jsonify({"nextPage": None,"data": saveDatas})
+			return ({"nextPage": None,"data": saveDatas})
 
-	except Exception:
+	except Exception as e:
+		print(e)
 		data={
 			"error": True,
 			"message": "伺服器內部錯誤"
 		}
-		return jsonify(data), 500
+		return (data), 500
 
-	
+	finally:
+		cursor.close()
+		mysql_connection.close()
 
 
 
 @app.route("/api/attraction/<attractionId>", methods=["GET"])
 def attractionId(attractionId):
-	
-	check = "SELECT * FROM attractions WHERE id=%s"
-	check_value=(attractionId,)
-	cursor.execute(check, check_value)
 
-	records = cursor.fetchone()
-	
-	
 	try:
+		mysql_connection = pool.get_connection()
+		cursor = mysql_connection.cursor(buffered=True, dictionary=True)
+		
+		check = "SELECT * FROM attractions WHERE id=%s"
+		check_value=(attractionId,)
+		cursor.execute(check, check_value)
+
+		records = cursor.fetchone()
 		jpg = re.split(",", records["images"])
 		data = {
         	"id": records["id"],
@@ -131,7 +155,7 @@ def attractionId(attractionId):
         	"lng": records["lng"],
         	"images": jpg[:-1]
         	}
-		return jsonify({"data": data}), 200
+		return ({"data": data}), 200
 
 
 	except Exception:
@@ -139,7 +163,7 @@ def attractionId(attractionId):
 			"error": True,
 			"message": "景點編號不正確"
 		}
-		return jsonify(data), 400
+		return (data), 400
 
 
 	except:
@@ -147,7 +171,12 @@ def attractionId(attractionId):
 			"error": True,
 			"message": "伺服器內部錯誤"
 		}
-		return jsonify(data), 500
+		return (data), 500
+
+
+	finally:
+		cursor.close()
+		mysql_connection.close()
 
 	
 	
@@ -156,24 +185,28 @@ def categories():
 
 	saveDatas=[]
 	try:
+		mysql_connection = pool.get_connection()
+		cursor = mysql_connection.cursor(buffered=True, dictionary=True)
 		cursor.execute("SELECT DISTINCT category FROM attractions")
 
 		records = cursor.fetchall()
 		# print(records)
 		for i in records:
 			saveDatas.append(i["category"])
-		return jsonify({"data": saveDatas}), 200
+		return ({"data": saveDatas}), 200
 
 	except:
 		data={
 			"error": True,
 			"message": "伺服器內部錯誤"
 		}
-	return jsonify(data), 500
+		return (data), 500
+
+	finally:
+		cursor.close()
+		mysql_connection.close()
 
 
 
 app.run(host="0.0.0.0", port=3000, debug=True)
 
-# cursor.close()
-# mysql_connection.close()
