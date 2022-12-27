@@ -1,23 +1,31 @@
 from flask import Flask, Blueprint, jsonify, make_response, request
-import re, jwt
+from dotenv import load_dotenv
+import re, jwt, os
+
+load_dotenv()
+
 
 booking = Blueprint('booking', __name__)
 import mysql.connector
-mysql_connection = mysql.connector.connect(
-    host='localhost',
-    port='3306',
+import mysql.connector.pooling
+
+pool = mysql.connector.pooling.MySQLConnectionPool(
+    host='127.0.0.1',
+    # port='3306',
     user='root',
-    password='password',
-    database='attractions_data'
+    password=os.getenv("password"),
+    database='attractions_data',
+    pool_name='my_pool',
+    pool_size=5,
+    pool_reset_session=True
 )
-
-cursor = mysql_connection.cursor(buffered=True)
-
-
 
 @booking.route("/api/booking", methods=["POST"])
 def bookingPost():
     try:
+        mysql_connection = pool.get_connection()
+        cursor = mysql_connection.cursor(buffered=True, dictionary=True)
+
         token = request.cookies.get("token")
         
         if token:
@@ -67,72 +75,93 @@ def bookingPost():
 			"message": "伺服器內部錯誤"}), 500)
             return res
 
+    finally:
+        cursor.close()
+        mysql_connection.close()
 
 
 @booking.route("/api/booking", methods=["GET"])
 def bookingGet():
-    token = request.cookies.get("token")
-    data = jwt.decode(token, "mykey123", algorithms=["HS256"])
-    userId = data["id"]
+    try:
+        mysql_connection = pool.get_connection()
+        cursor = mysql_connection.cursor(buffered=True, dictionary=True)
 
-    if token:
-        check = """
-        SELECT 
-            attractions.id, attractions.name, 
-            attractions.address, attractions.images, 
-            booking.date, booking.time, booking.price 
-        FROM attractions INNER JOIN 
-        booking ON attractions.id = booking.attractionId WHERE booking.userId = %s"""
+        token = request.cookies.get("token")
+        data = jwt.decode(token, "mykey123", algorithms=["HS256"])
+        userId = data["id"]
 
-        check_value = (userId, )
-        cursor.execute(check, check_value)
-        records = cursor.fetchone()
-    
-        if records:
-            jpg = records[3].split(",")
-            data = {
-            "attraction" : {
-        	    "id": records[0],
-        	    "name": records[1],
-        	    "address": records[2],
-        	    "image": jpg[0]
-        },
-        	"date": records[4],
-        	"time": records[5],
-        	"price": records[6]
-        }	
-            
+        if token:
+            check = """
+            SELECT 
+                attractions.id, attractions.name, 
+                attractions.address, attractions.images, 
+                booking.date, booking.time, booking.price 
+            FROM attractions INNER JOIN 
+            booking ON attractions.id = booking.attractionId WHERE booking.userId = %s"""
+
+            check_value = (userId, )
+            cursor.execute(check, check_value)
+            records = cursor.fetchone()
+        
+            if records:
+                jpg = re.split(",", records["images"])	
+                # jpg = records["image"].split(",")
+                data = {
+                "attraction" : {
+                    "id": records["id"],
+                    "name": records["name"],
+                    "address": records["address"],
+                    "image": jpg[0]
+            },
+                "date": records["date"],
+                "time": records["time"],
+                "price": records["price"]
+            }	
+                
+            else:
+                data = None
+
+            res = make_response({"data": data}, 200)
+            return res
+        
         else:
-            data = None
+            res = make_response(({
+                "error": True,
+                "message": "未登入系統，拒絕存取"}), 403)
+            return res
 
-        res = make_response({"data": data}, 200)
-        return res
-    
-    else:
-        res = make_response(({
-			"error": True,
-			"message": "未登入系統，拒絕存取"}), 403)
-        return res
+    finally:
+        cursor.close()
+        mysql_connection.close()
 
     
 
 @booking.route("/api/booking", methods=["DELETE"])
 def bookingDelete():
-    
-    token = request.cookies.get("token")
-    
-    if token:
-        data = jwt.decode(token, "mykey123", algorithms=["HS256"])
-        userId = data["id"]
-        deleteBooking = "DELETE FROM booking WHERE userId = %s"
-        deleteData = (userId,)
-        cursor.execute(deleteBooking, deleteData)
-        mysql_connection.commit()   
-        res = make_response(({"ok": True}), 200)
-        return res
+
+    try:
+        mysql_connection = pool.get_connection()
+        cursor = mysql_connection.cursor(buffered=True, dictionary=True)
+
+        token = request.cookies.get("token")
         
-    else:
-        res = make_response(({
-			"error": True,
-			"message": "未登入系統，拒絕存取"}), 403)
-        return res
+        if token:
+            data = jwt.decode(token, "mykey123", algorithms=["HS256"])
+            userId = data["id"]
+            deleteBooking = "DELETE FROM booking WHERE userId = %s"
+            deleteData = (userId,)
+            cursor.execute(deleteBooking, deleteData)
+            mysql_connection.commit()   
+            res = make_response(({"ok": True}), 200)
+            return res
+            
+        else:
+            res = make_response(({
+                "error": True,
+                "message": "未登入系統，拒絕存取"}), 403)
+            return res
+
+    finally:
+        cursor.close()
+        mysql_connection.close()
+

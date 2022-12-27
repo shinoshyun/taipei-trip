@@ -1,0 +1,35 @@
+{% extends "navbar.html" %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% block css %}
+    <link rel="stylesheet" href="/css/thankyou.css">
+    {% endblock css %}
+</head>
+
+<body>
+
+    {% block html %}
+    <div class="thxContent">
+        <div class="thxContainer">
+            <img src="/icon/checked.png">
+            <h2>訂單已完成</h2>
+            <h3></h3>
+        </div>
+    </div>
+    <div class="footer">
+        <h3>COPYRIGHT © 2021 台北一日遊</h3>
+    </div>
+    {% endblock html %}
+
+    {% block js %}
+    <script src="https://js.tappaysdk.com/sdk/tpdirect/v5.14.0"></script>
+    <script src="/js/thankyou.js"></script>
+    {% endblock js %}
+</body>
+
+</html>
